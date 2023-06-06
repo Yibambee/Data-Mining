@@ -5,4 +5,6 @@ Data bisa diakses [disini](/Data)
 
 Materi 
 - [Random Forest](/Random-Forest)
+- [KNN](/KNN) 
+- [SVM](/SVM)
 
