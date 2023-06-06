@@ -2,5 +2,5 @@
 Mata Kuliah Data Mining 
 
 Materi 
-- [Random Forest](/Random Forest/)
+- [Random Forest](/Random-Forest)
 
