@@ -1,6 +1,6 @@
 # Data-Mining
-## Mata Kuliah Data Mining 
+Mata Kuliah Data Mining 
 
-### Materi 
+Materi 
 - [Random Forest](/Random Forest/)
 
