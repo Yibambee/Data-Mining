@@ -1,0 +1,90 @@
+---
+title: "Contoh SVM"
+author: "Niko Romano / 222011356 / 3SD1"
+---
+
+# Siapkan Package dan Baca Data 
+
+Use library e1071, you can install it using install.packages(“e1071”). Load library
+
+```{r}
+library(e1071)
+
+# Using Iris data
+head(iris,5)
+```
+
+
+```{r}
+# Attach the Data
+attach(iris)
+```
+
+```{r}
+# Divide Iris data to x (containt the all features) and y only the classes
+x <- subset(iris, select=-Species)
+y <- Species
+```
+
+# Buat Model SVM
+
+```{r}
+# Create SVM Model and show summary
+svm_model <- svm(Species ~ ., data=iris)
+summary(svm_model)
+```
+
+```{r}
+# Cara lain
+# Create SVM Model and show summary
+svm_model1 <- svm(x,y)
+summary(svm_model1)
+```
+
+```{r}
+# Run Prediction and you can measuring the execution time in R
+
+pred <- predict(svm_model1,x)
+system.time(pred <- predict(svm_model1,x))
+```
+
+# Evaluasi Model 
+
+```{r}
+table(pred,y)
+```
+
+# Tuning SVM to find the best cost and gamma 
+
+```{r}
+svm_tune <- tune(svm, train.x=x, train.y=y, 
+              kernel="radial", ranges=list(cost=10^(-1:2), gamma=c(.5,1,2)))
+
+print(svm_tune)
+```
+
+# Buat Model Kembali 
+
+After you find the best cost and gamma, you can create svm model again and try to run again
+
+```{r}
+svm_model_after_tune <- svm(Species ~ ., data=iris, kernel="radial", cost=1, gamma=0.5)
+summary(svm_model_after_tune)
+```
+
+# Evaluasi Model Baru 
+
+```{r}
+pred <- predict(svm_model_after_tune,x)
+system.time(predict(svm_model_after_tune,x))
+```
+
+```{r}
+table(pred,y) 
+```
+
+
+
+
+
+
