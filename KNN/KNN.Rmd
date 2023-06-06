@@ -1,0 +1,34 @@
+
+```{r}
+#Import the dataset
+loan <- read.csv("D:/Users/ASUS/Documents/Materi Semester 6/Data Mining (DM)/Data/Credit_Data.csv")
+str(loan)
+loan.subset <- loan[c('Creditablity','Age..years.','Sex...Marital.Status',
+                      'Occupation','Account.Balance','Credit.Amount',
+                      'Length.of.current.employment','Purpose')]
+str(loan.subset)
+# loan.subset <- as.data.frame(sapply(loan.subset, as.numeric))
+head(loan.subset)
+
+```
+
+
+```{r}
+#Normalization
+normalize <- function(x){
+  return ((x - min(x)) / (max(x) - min(x))) 
+}
+loan.subset.n <- as.data.frame(lapply(loan.subset[,2:8], normalize))
+head(loan.subset.n)
+```
+
+```{r}
+#Data split
+set.seed(123)
+dat.d <- sample(1:nrow(loan.subset.n),size=nrow(loan.subset.n)*0.7,
+                replace = FALSE) #random selection of 70% data.
+
+train.loan <- loan.subset[dat.d,] # 70% training data
+test.loan <- loan.subset[-dat.d,] # remaining 30% test data
+```
+

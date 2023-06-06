@@ -1,0 +1,139 @@
+---
+title: "Contoh KNN"
+author: "Niko Romano / 222011356 / 3SD1"
+---
+
+# Baca Data
+
+```{r}
+#Import the dataset
+loan <- read.csv("D:/Users/ASUS/Documents/Materi Semester 6/Data Mining (DM)/Data/credit_data_fix.csv")
+
+# melihat struktur data 
+str(loan)
+```
+
+# Cleaning Data
+
+```{r}
+loan.subset <- loan[c('Creditability','Age..years.','Sex...Marital.Status','Occupation','Account.Balance','Credit.Amount','Length.of.current.employment','Purpose')]
+
+str(loan.subset)
+
+```
+
+# Data Normalization
+
+```{r}
+head(loan.subset)
+```
+
+```{r}
+#Normalization
+normalize <- function(x) {
+return ((x - min(x)) / (max(x) - min(x))) }
+
+loan.subset.n <- as.data.frame(lapply(loan.subset[,2:8], normalize))
+head(loan.subset.n)
+```
+
+# Data Splicing
+
+```{r}
+set.seed(123)
+
+# membagi data dengan komposisi 70:30
+dat.d <- sample(1:nrow(loan.subset.n),size=nrow(loan.subset.n)*0.7,replace = FALSE) #random selection of 70% data.
+ 
+train.loan <- loan.subset[dat.d,] # 70% training data
+test.loan <- loan.subset[-dat.d,] # remaining 30% test data
+
+```
+
+# Buat df sendiri untuk column credibility
+
+```{r}
+#Creating seperate dataframe for 'Creditability' feature which is our target.
+train.loan_labels <- loan.subset[dat.d,1]
+test.loan_labels <-loan.subset[-dat.d,1]
+```
+
+# Bangun Model
+
+```{r}
+# Load class package
+library(class)
+```
+
+```{r}
+#Find the number of observation
+NROW(train.loan_labels) 
+
+```
+
+So, we have 700 observations in our training data set. The square root of 700 is around 26.45, therefore we'll create two models. One with 'K' value as 26 and the other model with a 'K' value as 27.
+
+```{r}
+knn.26 <- knn(train=train.loan, test=test.loan, cl=train.loan_labels, k=26)
+knn.27 <- knn(train=train.loan, test=test.loan, cl=train.loan_labels, k=27)
+```
+
+# Model Evaluation
+
+```{r}
+#Calculate the proportion of correct classification for k = 26, 27
+ACC.26 <- 100 * sum(test.loan_labels == knn.26)/NROW(test.loan_labels)
+ACC.27 <- 100 * sum(test.loan_labels == knn.27)/NROW(test.loan_labels)
+
+ACC.26
+ACC.27
+```
+
+```{r}
+# Check prediction against actual value in tabular form for k=26
+table(knn.26 ,test.loan_labels)
+```
+
+```{r}
+# Check prediction against actual value in tabular form for k=27
+table(knn.27 ,test.loan_labels)
+
+```
+
+# Cara lain buat confusion matrix
+
+```{r}
+library(caret)
+```
+
+```{r}
+confusionMatrix(table(knn.26 ,test.loan_labels))
+```
+
+# Optimisasi
+
+In order to improve the accuracy of the model, you can use n number of techniques such as the Elbow method and maximum percentage accuracy graph. In the below code snippet, I've created a loop that calculates the accuracy of the KNN model for 'K' values ranging from 1 to 28. This way you can check which 'K' value will result in the most accurate model:
+
+```{r}
+i=1
+k.optm=1
+
+for (i in 1:28){
+  knn.mod <- knn(train=train.loan, test=test.loan, cl=train.loan_labels, k=i)
+  k.optm[i] <- 100 * sum(test.loan_labels == knn.mod)/NROW(test.loan_labels)
+  k=i
+  cat(k,'=',k.optm[i],'')
+}
+```
+
+Akurasi maksimum diperoleh pada saat k = 17, 19, 27, dan 28
+
+# Accuracy Plot
+
+```{r}
+#Accuracy plot
+plot(k.optm, type="b", xlab="K- Value",ylab="Accuracy level")
+```
+
+
+
