@@ -7,4 +7,5 @@ Materi
 - [Random Forest](/Random-Forest)
 - [KNN](/KNN) 
 - [SVM](/SVM)
+- [Cluster](/Cluster)
 
