@@ -1,0 +1,61 @@
+```{r}
+library(dplyr)
+library(dbscan)
+library(factoextra)
+gempa <- read.csv("D:/Users/ASUS/Documents/Materi Semester 6/Data Mining (DM)/Data//Data Gempa.csv",header = TRUE)
+gempa_java <- gempa%>%mutate(Lat = case_when(SN=="S" ~ -1*Lat,
+                               SN=="N" ~ Lat))%>%filter(Region == "Java, Indonesia")
+write.csv(gempa_java[,c(1,3,5,7,8)],file = "D:/Users/ASUS/Documents/Materi Semester 6/Data Mining (DM)/Data/gempajawa.csv")
+
+kotajawa <- read.csv("D:/Users/ASUS/Documents/Materi Semester 6/Data Mining (DM)/Data/kotajawa.csv", header = TRUE)
+```
+
+```{r}
+plot(gempa_java$Lon,gempa_java$Lat)
+points(kotajawa$Long,kotajawa$Lat, pch=2, col="red")
+text(kotajawa$Long,kotajawa$Lat,kotajawa$Kota,pos = 3)
+```
+
+
+```{r}
+#Pulau Jawa
+kNNdistplot(gempa_java[,c(3,5)], k=30)
+abline(h=0.7)
+```
+
+```{r}
+db <- dbscan(gempa_java[,c(5,3)],0.7,30)
+hullplot(gempa_java[,c(5,3)], db$cluster)
+```
+
+
+```{r}
+plot(gempa_java$Lon,gempa_java$Lat, pch=db$cluster, col=db$cluster+1)
+points(kotajawa$Long,kotajawa$Lat, pch=2, col="brown")
+text(kotajawa$Long,kotajawa$Lat,kotajawa$Kota,pos = 3)
+```
+
+
+```{r}
+#Indonesia
+gempa2 <- gempa%>%mutate(Lat = case_when(SN=="S" ~ -1*Lat,
+                                             SN=="N" ~ Lat))
+
+kNNdistplot(gempa2[,c(5,3,8)], k=5)
+abline(h=0.8)
+```
+
+```{r}
+db <- dbscan(gempa2[,c(5,3,8)],0.5,5)
+hullplot(gempa2[,c(5,3,8)], db$cluster)
+
+clust <- as.factor(db$cluster)
+```
+
+```{r}
+library(rgdal)
+states=readOGR("D:/Users/ASUS/Documents/Materi Semester 6/Data Mining (DM)/Data/",layer = "indonesia")
+plot(states)
+points(gempa2$Lon,gempa2$Lat, col=db$cluster+1)
+```
+ 
