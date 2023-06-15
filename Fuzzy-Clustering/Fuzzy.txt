@@ -1,0 +1,136 @@
+1. fuzzy logic 
+fuzzy artinya tidak jelas/samar, merujuk pada segala sesuatu 
+yang tidak jelas 
+
+tidak dapat didefinisikan benar/salahnya maka event tersebut
+memiliki sifat fuzzy
+
+misal jenis kelamin (bukan fuzzy), karena ada batas jelas 
+
+kalau tinggi badan, pendek tinggi kan relatif (nah itu termasuk samar kan 
+sehingga dikatakan memiliki sifat fuzzy)
+
+
+2. crisp set vs fuzzy set 
+
+crisp set 
+- grafiknya seperti tangga
+- selalu ada kepastian
+- bernilai benar atau salah
+- tidak ada item yang setengah2 (middle)
+
+fuzzy set ada wilayah absolut
+- item dalam himpunan bisa menjadi anggota himpunan fuzzy dengan 
+derajat yang berbeda 
+- item yang derajatnya bernilai = 1 berarti benar2 anggota himpunan tersebut
+- item yang derajatnya bernilai = 0 berarti benar2 bukan anggota himpunan tersebut 
+
+3. Contoh fuzzy set
+
+misal ada hhimpunan fuzzy berupa temperature 
+
+4. Fuzzy logic 
+
+- dalam boolean logic, nilai yang diperbolehkan hanyalah 2 
+- sedangkan fuzzy logic maka merupakan many value logic, bisa 0, 
+1, dan antara 0 dan 1 
+
+- fuzzy logic bukan logika yang samar, melainkan merupakan logika yang 
+mendeskripsikan kesamaran
+
+- dalam fuzzy logic operasinya sama seperti crisp (and, or, not) 
+- boolean merupakan himpunan dari fuzzy logic
+- dalam fuzzy logic maka operasi and (pakek minimum) , or (pakek maksimum)
+dan not (1-A)
+
+- nanti akan dilakukan defusifikasi, sehingga menampilkan output layaknya scrips
+
+5. Fuzzy Clustering 
+
+- clustering dalam cluster homogen, antar cluster heterogen 
+- fuzzy clustering berarti titik dapat memiliki lebih dari 1 cluster 
+dengan memiliki derajat yang berbeda 
+- hard clustering (crips) <- titik hanya bisa menjadi anggota 1 cluster 
+- soft clustering (fuzzy) <- titik bisa menjadi anggota lebih dari 1 cluster
+
+conoh kasus musim (musim lebih digambarkan oleh fuzzy cluster)
+
+6. Derajat keanggotaan (membership grades) 
+
+- mengindikasikan seberapa dekat suatu titik data terhadap cluster
+- di tepian cluster berarti derajat rendah (jauh dari centroid cluster)
+- derajat keanggotaan harus berjumlah 1 
+- derajat keanggotaan diekspresikan dengan fungsi keanggotaan 
+
+7. fungsi keanggotaan 
+
+- suatu fungsi yang mencirikan kesamaran 
+- bisa direpresentasikan dengan matematis atau grafis 
+- tidak harus berbentuk fungsi, tapi bisa grafis 
+
+bagian dari fungsi membership
+a. bagian core (inti), derajat keanggotaannya = 1
+b. bagian support, derajat keanggotaanya selain =   0 
+c. boundary, derajat keanggotaanya > 0 tapi < 1
+
+ada fungsi triangular membership function
+ada juga trapezoidal function 
+ada gaussian function 
+
+8. Fuzzification 
+
+- merubah nilai crisp menjadi derajat keanggotaan 
+- sebaliknya ada defuzzification, yaitu merubah derajat keanggotaan
+kembali menjadi crisp
+
+9. Defuzzification 
+
+teknik yang umum digunakan adalah teknik center of gravity. 
+kebanyakan fungsi keanggotaan berbentuk triangle. 
+
+kita potong sehingga membentuk trapezoid, lalu gambar dengan ditumpuk
+kemudian cari titik tengah atau centroid 
+
+10. Algoritma 
+
+fuzzy clustering dibagi menjadi dua area, yaitu:
+a. classical fuzzy clustering
+b. shape based fuzzy clustering
+
+11. classical fuzzy clustering
+
+ada banyak metode: 
+a. fuzzy c-means algorithm (FCM)
+b. gustafson-kessel algorithm (GK)
+c. Gath-geva algorithm (GG)
+
+12. FCM algorithm
+
+kelebihan 
+- memberikan hasil terbaik pada data overlap 
+- bisa leih baik dari k-means 
+- derajakat keanggotaan menunjukkan kedekatan dengan cluster
+
+kekurangan
+- membutuhkan suatu pengetahuan untuk menentukan jumlah cluster
+- dibutuhkan iterasi yang lebih banyak jika ingin lebih akurat 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
